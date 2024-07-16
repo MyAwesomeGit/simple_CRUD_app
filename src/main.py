@@ -1,16 +1,37 @@
-# This is a sample Python script.
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+from fastapi import FastAPI
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+app = FastAPI()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+messages_db = {"0": "First message"}
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+@app.get("/")
+async def get_all_messages() -> dict:
+    pass
+
+
+@app.get("/message/{message_id}")
+async def get_message(message_id: str) -> str:
+    pass
+
+
+@app.post("/message")
+async def create_message(message: str) -> str:
+    pass
+
+
+@app.put("/message/{message_id}")
+async def update_message(message_id: str, message: str) -> str:
+    pass
+
+
+@app.delete("/message/{message_id}")
+async def delete_message(message_id: str) -> str:
+    pass
+
+
+@app.delete("/")
+async def kill_message_all() -> str:
+    pass
