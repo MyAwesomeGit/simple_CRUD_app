@@ -25,8 +25,9 @@ async def create_message(message: str = Body()) -> str:
 
 
 @app.put("/message/{message_id}")
-async def update_message(message_id: str, message: str) -> str:
-    pass
+async def update_message(message_id: str, message: str = Body()) -> str:
+    messages_db[message_id] = message
+    return f"Message updated!"
 
 
 @app.delete("/message/{message_id}")
