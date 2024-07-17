@@ -32,10 +32,12 @@ async def update_message(message_id: str, message: str = Body()) -> str:
 
 @app.delete("/message/{message_id}")
 async def delete_message(message_id: str) -> str:
-    pass
+    messages_db.pop(message_id)
+    return f"Message ID={message_id} deleted!"
 
 
 @app.delete("/")
-async def kill_message_all() -> str:
-    pass
+async def delete_all_messages() -> str:
+    messages_db.clear()
+    return "All messages deleted!"
 
