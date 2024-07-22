@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, status, Body
+from fastapi import FastAPI, status, Body, HTTPException
 from typing import List
 from message import Message
 
@@ -14,8 +14,11 @@ async def get_all_messages() -> List[Message]:
 
 
 @app.get("/message/{message_id}")
-async def get_message(message_id: int)  -> Message:
-    return messages_db[message_id]
+async def get_message(message_id: int) -> Message:
+    try:
+        return messages_db[message_id]
+    except IndexError:
+        raise HTTPException(status_code=404, detail="Message not found")
 
 
 @app.post("/message", status_code=status.HTTP_201_CREATED)
