@@ -29,12 +29,13 @@ async def create_message(message: Message) -> str:
 
 @app.put("/message/{message_id}")
 async def update_message(message_id: str, message: str = Body()) -> str:
-    messages_db[message_id] = message
+    edit_message = messages_db[message_id]
+    edit_message.text = message
     return f"Message updated!"
 
 
 @app.delete("/message/{message_id}")
-async def delete_message(message_id: str) -> str:
+async def delete_message(message_id: int) -> str:
     messages_db.pop(message_id)
     return f"Message ID={message_id} deleted!"
 
@@ -43,3 +44,4 @@ async def delete_message(message_id: str) -> str:
 async def delete_all_messages() -> str:
     messages_db.clear()
     return "All messages deleted!"
+
