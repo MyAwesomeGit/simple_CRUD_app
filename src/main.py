@@ -43,8 +43,11 @@ async def update_message(message_id: int, message: str = Body()) -> str:
 
 @app.delete("/message/{message_id}")
 async def delete_message(message_id: int) -> str:
-    messages_db.pop(message_id)
-    return f"Message ID={message_id} deleted!"
+    try:
+        messages_db.pop(message_id)
+        return f"Message ID={message_id} deleted!"
+    except IndexError:
+        raise HTTPException(status_code=404, detail="Message not found")
 
 
 @app.delete("/")
