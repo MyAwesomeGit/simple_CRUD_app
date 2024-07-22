@@ -32,10 +32,13 @@ async def create_message(message: Message) -> str:
 
 
 @app.put("/message/{message_id}")
-async def update_message(message_id: str, message: str = Body()) -> str:
-    edit_message = messages_db[message_id]
-    edit_message.text = message
-    return f"Message updated!"
+async def update_message(message_id: int, message: str = Body()) -> str:
+    try:
+        edit_message = messages_db[message_id]
+        edit_message.text = message
+        return f"Message updated!"
+    except IndexError:
+        raise HTTPException(status_code=404, detail="Message not found")
 
 
 @app.delete("/message/{message_id}")
